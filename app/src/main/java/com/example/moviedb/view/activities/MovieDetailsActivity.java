@@ -1,4 +1,4 @@
-package com.example.moviedb.view;
+package com.example.moviedb.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviedb.R;
-import com.example.moviedb.helper.Const;
 import com.example.moviedb.model.Movies;
 import com.example.moviedb.viewmodel.MovieViewModel;
 
@@ -30,12 +29,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        img_movie_details = findViewById(R.id.img_movie_details);
-        lbl_movie_details = findViewById(R.id.lbl_movie_details);
-        lbl_overview_movie_details = findViewById(R.id.lbl_overview_movie_details);
-        lbl_name_movie_details = findViewById(R.id.lbl_name_movie_details);
-        lbl_subtitle_movie_details = findViewById(R.id.lbl_subtitle_movie_details);
-        lbl_genres_movie_details = findViewById(R.id.lbl_genres_movie_details);
+        img_movie_details = findViewById(R.id.img_movie_details_fragment);
+        lbl_movie_details = findViewById(R.id.lbl_movie_details_fragment);
+        lbl_overview_movie_details = findViewById(R.id.lbl_overview_movie_details_fragment);
+        lbl_name_movie_details = findViewById(R.id.lbl_name_movie_details_fragment);
+        lbl_subtitle_movie_details = findViewById(R.id.lbl_subtitle_movie_details_fragment);
+        lbl_genres_movie_details = findViewById(R.id.lbl_genres_movie_details_fragment);
         Intent i = getIntent();
 
 
@@ -49,7 +48,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
 
         lbl_movie_details.setText(movie_id);
-        img_movie_details = findViewById(R.id.img_movie_details);
+        img_movie_details = findViewById(R.id.img_movie_details_fragment);
 
     }
     private Observer<Movies>showResultDetails = new Observer<Movies>() {

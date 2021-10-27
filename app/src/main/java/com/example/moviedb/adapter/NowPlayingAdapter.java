@@ -1,7 +1,6 @@
 package com.example.moviedb.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.moviedb.R;
 import com.example.moviedb.helper.Const;
 import com.example.moviedb.model.NowPlaying;
-import com.example.moviedb.view.MovieDetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.CardViewHolder> {
@@ -53,15 +50,19 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.Ca
         holder.lbl_overview_card_nowplaying.setText(results.getOverview());
         holder.lbl_releasedate_card_nowplaying.setText(results.getRelease_date());
 
-        holder.cv_card_nowplaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra("movie_id", ""+results.getId());
 
-                context.startActivity(intent);
-            }
-        });
+//        holder.cv_card_nowplaying.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent(context, MovieDetailsActivity.class);
+////                intent.putExtra("movie_id", ""+results.getId());
+////
+////                context.startActivity(intent);
+////                Bundle bundle = new Bundle();
+////                bundle.putString("movieId", ""+results.getId());
+////                Navigation.findNavController(v).navigate(R.id.action_nowPlayingFragment_to_MovieDetailsFragment, bundle);
+//            }
+//        });
     }
 
     @Override
@@ -75,11 +76,13 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.Ca
         TextView lbl_title_card_nowplaying, lbl_overview_card_nowplaying, lbl_releasedate_card_nowplaying;
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_poster_card_nowplaying = itemView.findViewById(R.id.img_poster_card_nowplaying);
-            lbl_title_card_nowplaying = itemView.findViewById(R.id.lbl_title_card_nowplaying);
-            lbl_overview_card_nowplaying = itemView.findViewById(R.id.lbl_overview_card_nowplaying);
-            lbl_releasedate_card_nowplaying = itemView.findViewById(R.id.lbl_releasedate_card_nowplaying);
-            cv_card_nowplaying = itemView.findViewById(R.id.cv_card_nowplaying);
+            img_poster_card_nowplaying = itemView.findViewById(R.id.img_poster_card_upcoming);
+            lbl_title_card_nowplaying = itemView.findViewById(R.id.lbl_title_card_upcoming);
+            lbl_overview_card_nowplaying = itemView.findViewById(R.id.lbl_overview_card_upcoming);
+            lbl_releasedate_card_nowplaying = itemView.findViewById(R.id.lbl_releasedate_card_upcoming);
+            cv_card_nowplaying = itemView.findViewById(R.id.cv_card_upcoming);
+
+
         }
 
     }
