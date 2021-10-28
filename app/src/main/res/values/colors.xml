@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#ED1C1C</color>
     <color name="Cikir">#F1C02D</color>
+
+    <string name="color" />
 </resources>

@@ -1,7 +1,9 @@
 package com.example.moviedb.view.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +22,9 @@ import com.example.moviedb.helper.ItemClickSupport;
 import com.example.moviedb.model.UpComing;
 import com.example.moviedb.repositories.MovieRepository;
 import com.example.moviedb.viewmodel.MovieViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,43 +71,60 @@ public class upComingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dialog = ProgressDialog.show(getActivity(), "", "Now Loading", true);
     }
 
     private RecyclerView rv_upcoming_fragment;
     private MovieViewModel viewModel;
+    private ProgressDialog dialog;
+    private int currentPage = 1;
+    private int maxPage = 1;
+    private List<UpComing.Results> listnexpage = new ArrayList<>();
+    private UpComingAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_up_coming, container, false);
+        View view = inflater.inflate(R.layout.fragment_up_coming, container, false);
         rv_upcoming_fragment = view.findViewById(R.id.rv_upcoming_fragment);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_upcoming_fragment.setLayoutManager(linearLayoutManager);
+//        UpComingAdapter adapter = new UpComingAdapter(getActivity());
+//        rv_upcoming_fragment.setAdapter(adapter);
+        adapter = new UpComingAdapter(getActivity());
+        adapter.setUpCominglist(listnexpage);
         viewModel = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
-        viewModel.getUpComing();
+        viewModel.getUpComing(currentPage);
         viewModel.getResultUpComing().observe(getActivity(), showUpComing);
+
         return view;
+
+
     }
+
 
     private Observer<UpComing> showUpComing = new Observer<UpComing>() {
         @Override
         public void onChanged(UpComing upComing) {
-            rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
-            UpComingAdapter adapter = new UpComingAdapter(getActivity());
-            adapter.setUpCominglist(upComing.getResults());
-            rv_upcoming_fragment.setAdapter(adapter);
 
-
-
-
-            ItemClickSupport.addTo(rv_upcoming_fragment).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                @Override
-                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("movieId" , "" + upComing.getResults().get(position).getId());
-                    Navigation.findNavController(v).navigate(R.id.action_upComingFragment_to_MovieDetailsFragment, bundle);
-                }
-            });
+                maxPage = upComing.getTotal_pages();
+//            rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
+//            adapter.setUpCominglist(upComing.getResults());
+                listnexpage.addAll(upComing.getResults());
+                rv_upcoming_fragment.setAdapter(adapter);
+                ItemClickSupport.addTo(rv_upcoming_fragment).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("movieId", "" + upComing.getResults().get(position).getId());
+                        Navigation.findNavController(v).navigate(R.id.action_upComingFragment_to_MovieDetailsFragment, bundle);
+                    }
+                });
+            dialog.dismiss();
         }
-    };
 
+    };
 
 
 

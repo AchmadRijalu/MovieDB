@@ -20,7 +20,7 @@ public interface ApiEndPoint {
            @Query("api_key") String apikey
     );
     @GET("movie/upcoming") Call<UpComing> getUpComing(
-            @Query("api_key") String apikey
+            @Query("api_key") String apikey, @Query("page") int page
     );
 
     @GET("movie/{movie_id}/credits") Call<Credits> getCredit(

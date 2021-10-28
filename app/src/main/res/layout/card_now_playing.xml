@@ -14,7 +14,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="#000000"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,6 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.503"
+
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
@@ -45,7 +46,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:text="Title"
-                android:textColor="#DFD62C"
+                android:textColor="#272725"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:text="Subtitile"
-                android:textColor="@color/Cikir"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/lbl_title_card_upcoming"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/lbl_title_card_upcoming"
@@ -71,7 +72,7 @@
                 android:layout_height="25dp"
                 android:layout_marginBottom="16dp"
                 android:text="Sub Title"
-                android:textColor="#DFB92B"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/img_poster_card_upcoming"
                 app:layout_constraintEnd_toEndOf="@+id/lbl_overview_card_upcoming"

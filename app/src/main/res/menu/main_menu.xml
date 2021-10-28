@@ -4,7 +4,9 @@
     <item
         android:id="@+id/nowPlayingFragment"
         android:icon="@drawable/ic_now_playing"
+        
         android:title="now playing" />
+
     <item
         android:id="@+id/upComingFragment"
         android:icon="@drawable/ic_up_coming"

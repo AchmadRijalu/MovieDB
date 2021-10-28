@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/lbl_carddetails_backdrop"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="176dp"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -167,13 +167,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginEnd="25dp"
                         android:text="TextView"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="@+id/lbl_carddetails_tagline"
                         app:layout_constraintStart_toStartOf="@+id/lbl_carddetails_tagline"
-                        app:layout_constraintTop_toBottomOf="@+id/lbl_carddetails_tagline" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                     <TextView
                         android:id="@+id/lbl_carddetails_tagline"
@@ -198,24 +198,24 @@
                         android:fontFamily="sans-serif-black"
                         android:text="Production Companies"
                         android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="@+id/lbl_carddetails_overview"
                         app:layout_constraintStart_toStartOf="@+id/textView11"
                         app:layout_constraintTop_toBottomOf="@+id/lbl_carddetails_overview" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_carddetails_production"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="130dp"
-                        app:layout_constraintEnd_toEndOf="@+id/lbl_carddetails_overview"
-                        app:layout_constraintStart_toStartOf="@+id/textView16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView16"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:listitem="@layout/card_details" />
+                        tools:ignore="SpeakableTextPresentCheck" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_carddetails_cast"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_width="0dp"
+                        android:layout_height="144dp"
+                        android:layout_marginTop="6dp"
                         android:layout_marginBottom="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -226,16 +226,34 @@
                         android:id="@+id/Cast"
                         android:layout_width="51dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Cast"
                         android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="@+id/rv_carddetails_production"
-                        app:layout_constraintStart_toStartOf="@+id/rv_carddetails_production"
+                        app:layout_constraintEnd_toEndOf="@+id/textView16"
+                        app:layout_constraintStart_toStartOf="@+id/textView16"
                         app:layout_constraintTop_toBottomOf="@+id/rv_carddetails_production" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="83dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Synopsis"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/lbl_carddetails_tagline"
+                        app:layout_constraintStart_toStartOf="@+id/lbl_carddetails_tagline"
+                        app:layout_constraintTop_toBottomOf="@+id/lbl_carddetails_tagline" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <ProgressBar
+        android:layout_width="25dp"
+        android:visibility= "gone"
+        android:layout_height="25dp">
+
+    </ProgressBar>
 </androidx.constraintlayout.widget.ConstraintLayout>

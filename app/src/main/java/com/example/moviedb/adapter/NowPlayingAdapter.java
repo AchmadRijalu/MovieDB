@@ -34,6 +34,7 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.Ca
 
 
 
+
     @NonNull
     @Override
     public NowPlayingAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -1,5 +1,6 @@
 package com.example.moviedb.view.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -65,10 +66,11 @@ public class NowPlayingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dialog = ProgressDialog.show(getActivity(), "", "Now Loading", true);
     }
     private RecyclerView rv_now_playing;
     private MovieViewModel view_Model;
-
+    private ProgressDialog dialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +111,9 @@ public class NowPlayingFragment extends Fragment {
 
                 }
             });
+            dialog.dismiss();
         }
+
+
     };
 }

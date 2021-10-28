@@ -1,5 +1,6 @@
 package com.example.moviedb.view.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -71,6 +72,7 @@ public class MovieDetailsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dialog = ProgressDialog.show(getActivity(), "", "Now Loading", true);
     }
 
 
@@ -81,6 +83,7 @@ public class MovieDetailsFragment extends Fragment {
     private RecyclerView rv_carddetails_production;
     private RecyclerView rv_carddetails_cast;
     private String movie_production = "";
+    private ProgressDialog dialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -175,6 +178,10 @@ public class MovieDetailsFragment extends Fragment {
             lbl_tagline.setText(tagline);
             Glide.with(getActivity()).load(full_image).into(lbl_poster);
             Glide.with(getActivity()).load(full_backdrop).into(lbl_backdrop);
+            dialog.dismiss();
         }
+
+
     };
+
 }
