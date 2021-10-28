@@ -77,8 +77,8 @@ public class upComingFragment extends Fragment {
     private RecyclerView rv_upcoming_fragment;
     private MovieViewModel viewModel;
     private ProgressDialog dialog;
-    private int currentPage = 1;
-    private int maxPage = 1;
+//    private int currentPage = 1;
+//    private int maxPage = 1;
     private List<UpComing.Results> listnexpage = new ArrayList<>();
     private UpComingAdapter adapter;
 
@@ -88,14 +88,13 @@ public class upComingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_up_coming, container, false);
         rv_upcoming_fragment = view.findViewById(R.id.rv_upcoming_fragment);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        rv_upcoming_fragment.setLayoutManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        rv_upcoming_fragment.setLayoutManager(linearLayoutManager);
 //        UpComingAdapter adapter = new UpComingAdapter(getActivity());
 //        rv_upcoming_fragment.setAdapter(adapter);
-        adapter = new UpComingAdapter(getActivity());
-        adapter.setUpCominglist(listnexpage);
+
         viewModel = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
-        viewModel.getUpComing(currentPage);
+        viewModel.getUpComing();
         viewModel.getResultUpComing().observe(getActivity(), showUpComing);
 
         return view;
@@ -108,9 +107,10 @@ public class upComingFragment extends Fragment {
         @Override
         public void onChanged(UpComing upComing) {
 
-                maxPage = upComing.getTotal_pages();
-//            rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
-//            adapter.setUpCominglist(upComing.getResults());
+            adapter = new UpComingAdapter(getActivity());
+            adapter.setUpCominglist(listnexpage);
+            rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
+            adapter.setUpCominglist(upComing.getResults());
                 listnexpage.addAll(upComing.getResults());
                 rv_upcoming_fragment.setAdapter(adapter);
                 ItemClickSupport.addTo(rv_upcoming_fragment).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
