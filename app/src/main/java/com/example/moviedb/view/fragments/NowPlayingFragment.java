@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 
 import com.example.moviedb.R;
 import com.example.moviedb.adapter.NowPlayingAdapter;
+import com.example.moviedb.adapter.PopularAdapter;
 import com.example.moviedb.helper.ItemClickSupport;
 import com.example.moviedb.model.NowPlaying;
+import com.example.moviedb.model.Popular;
 import com.example.moviedb.view.activities.NowPlayingActivity;
 import com.example.moviedb.viewmodel.MovieViewModel;
 
@@ -68,8 +70,8 @@ public class NowPlayingFragment extends Fragment {
         }
         dialog = ProgressDialog.show(getActivity(), "", "Now Loading", true);
     }
-    private RecyclerView rv_now_playing;
-    private MovieViewModel view_Model;
+    private RecyclerView rv_now_playing, rv_now_playing_popular;
+    private MovieViewModel view_Model ,view_model2;
     private ProgressDialog dialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,12 +80,17 @@ public class NowPlayingFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_now_playing, container, false);
 
         rv_now_playing = view.findViewById(R.id.rv_now_playing_fragment);
+        rv_now_playing_popular = view.findViewById(R.id.rv_now_playing_popular);
         view_Model = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
 
         view_Model.getNowPlaying();
 
         view_Model.getResultNowPlaying().observe(getActivity(), showNowPlaying);
 
+
+        view_model2 = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
+        view_model2.getPopular();
+        view_model2.getResultPopular().observe(getActivity(), showPopular);
 
         return view;
     }
@@ -115,5 +122,15 @@ public class NowPlayingFragment extends Fragment {
         }
 
 
+    };
+    private Observer<Popular> showPopular = new Observer<Popular>() {
+        @Override
+        public void onChanged(Popular popular) {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false);
+            rv_now_playing_popular.setLayoutManager(linearLayoutManager);
+            PopularAdapter adapt = new PopularAdapter(getActivity());
+            adapt.setListPopular(popular.getResults());
+            rv_now_playing_popular.setAdapter(adapt);
+        }
     };
 }

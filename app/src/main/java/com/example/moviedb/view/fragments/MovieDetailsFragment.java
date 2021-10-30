@@ -78,7 +78,7 @@ public class MovieDetailsFragment extends Fragment {
 
     private MovieViewModel viewModel, castModel;
     private String movie_genre = "";
-    private TextView lbl_name, lbl_avg, lbl_release, lbl_popularity,lbl_genres, lbl_tagline,lbl_overview;
+    private TextView lbl_name, lbl_avg, lbl_release, lbl_popularity,lbl_genres, lbl_tagline,lbl_overview , carddetails_avg_count;
     private ImageView lbl_poster, lbl_backdrop;
     private RecyclerView rv_carddetails_production;
     private RecyclerView rv_carddetails_cast;
@@ -101,7 +101,7 @@ public class MovieDetailsFragment extends Fragment {
         lbl_genres = view.findViewById(R.id.lbl_carddetails_genre);
         rv_carddetails_production = view.findViewById(R.id.rv_carddetails_production);
         rv_carddetails_cast = view.findViewById(R.id.rv_carddetails_cast);
-
+        carddetails_avg_count = view.findViewById(R.id.carddetails_avg_count);
         viewModel = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
 
         String movie_id = getArguments().getString("movieId");
@@ -138,6 +138,7 @@ public class MovieDetailsFragment extends Fragment {
 
             String title = movies.getTitle();
             String over = movies.getOverview();
+            String count = Integer.toString(movies.getVote_count());
             String popularity = Double.toString(movies.getPopularity());
             String avg = Double.toString(movies.getVote_average());
             String tagline = movies.getTagline();
@@ -169,7 +170,7 @@ public class MovieDetailsFragment extends Fragment {
 
 
 
-
+            carddetails_avg_count.setText(count);
             lbl_genres.setText(movie_genre);
             lbl_name.setText(title);
             lbl_release.setText(date);

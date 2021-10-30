@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/drawable/custom.xml" value="0.26458333333333334" />
+        <entry key="..\:/Android_Source/MovieDB/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2526041666666667" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26458333333333334" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/drawable/ic_now_playing.xml" value="0.2526041666666667" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/drawable/selector.xml" value="0.26458333333333334" />
@@ -16,7 +17,8 @@
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/card_up_coming.xml" value="0.264" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/cast_details.xml" value="0.23645833333333333" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/customselector.xml" value="0.2484375" />
-        <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/fragment_movie_details.xml" value="0.2" />
+        <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/extra.xml" value="0.23645833333333333" />
+        <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/fragment_movie_details.xml" value="0.4" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/fragment_now_playing.xml" value="0.2033514492753623" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/fragment_up_coming.xml" value="0.2033514492753623" />
         <entry key="..\:/Android_Source/MovieDB/app/src/main/res/layout/selector.xml" value="0.2484375" />

@@ -67,7 +67,13 @@ public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.CardVi
             lbl_overview_card_upcoming = itemView.findViewById(R.id.lbl_overview_card_upcoming);
             lbl_releasedate_card_upcoming = itemView.findViewById(R.id.lbl_releasedate_card_upcoming);
             cv_card_upcoming = itemView.findViewById(R.id.cv_card_upcoming);
+
+
+
+
+
         }
+
 
     }
 }

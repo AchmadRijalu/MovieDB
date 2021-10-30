@@ -11,6 +11,7 @@ import com.example.moviedb.helper.Const;
 import com.example.moviedb.model.Credits;
 import com.example.moviedb.model.Movies;
 import com.example.moviedb.model.NowPlaying;
+import com.example.moviedb.model.Popular;
 import com.example.moviedb.model.UpComing;
 import com.example.moviedb.repositories.MovieRepository;
 import com.example.moviedb.retrofit.ApiService;
@@ -54,14 +55,17 @@ public class MovieViewModel extends AndroidViewModel {
 
 
     //==Begin of viewmodel get Up Coming
+
+
     private MutableLiveData<UpComing> resultgetUpComing = new MutableLiveData<>();
     public void getUpComing(){
         resultgetUpComing = repository.getNowUpComing();
-
     }
     public LiveData<UpComing> getResultUpComing(){
         return resultgetUpComing;
     }
+
+
     //==End of viewmodel get Up Coming
 
     private MutableLiveData<Credits> resultGetMovieByIdCredit = new MutableLiveData<>();
@@ -69,10 +73,17 @@ public class MovieViewModel extends AndroidViewModel {
     public void getMovieByIdCredit(String movieId){
         resultGetMovieByIdCredit = repository.getCreditsData(movieId);
     }
-
     public LiveData<Credits> getResultGetMovieByIdCredit(){
         return resultGetMovieByIdCredit;
     }
 
 
+
+    private MutableLiveData<Popular> resultGetPopular = new MutableLiveData<>();
+    public void getPopular(){
+        resultGetPopular = repository.getNowPopular();
+    }
+    public LiveData<Popular>getResultPopular(){
+        return resultGetPopular;
+    }
 }
