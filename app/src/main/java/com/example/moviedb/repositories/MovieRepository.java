@@ -7,6 +7,7 @@ import com.example.moviedb.helper.Const;
 import com.example.moviedb.model.Credits;
 import com.example.moviedb.model.Movies;
 import com.example.moviedb.model.NowPlaying;
+import com.example.moviedb.model.Popular;
 import com.example.moviedb.model.UpComing;
 import com.example.moviedb.retrofit.ApiService;
 
@@ -106,6 +107,22 @@ public class MovieRepository {
             }
         });
 
+        return result;
+    }
+    public MutableLiveData<Popular> getNowPopular(){
+        final  MutableLiveData<Popular> result = new MutableLiveData<>();
+
+        ApiService.endPoint().getPopular(Const.API_KEY).enqueue(new Callback<Popular>() {
+            @Override
+            public void onResponse(Call<Popular> call, Response<Popular> response) {
+                result.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Popular> call, Throwable t) {
+
+            }
+        });
         return result;
     }
 
