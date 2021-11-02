@@ -11,11 +11,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.moviedb.R;
+import com.example.moviedb.adapter.ComingAdapter;
 import com.example.moviedb.adapter.NowPlayingAdapter;
 import com.example.moviedb.adapter.UpComingAdapter;
 import com.example.moviedb.helper.ItemClickSupport;
@@ -77,47 +79,84 @@ public class upComingFragment extends Fragment {
     private RecyclerView rv_upcoming_fragment;
     private MovieViewModel viewModel;
     private ProgressDialog dialog;
-//    private int currentPage = 1;
-//    private int maxPage = 1;
+    private int currentPage = 1;
+    private int maxPage = 1;
     private List<UpComing.Results> listnexpage = new ArrayList<>();
-    private UpComingAdapter adapter;
-
+    private ComingAdapter adapter;
+    public boolean check = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        listnexpage.clear();
+
+        currentPage = 1;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_up_coming, container, false);
         rv_upcoming_fragment = view.findViewById(R.id.rv_upcoming_fragment);
 
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        rv_upcoming_fragment.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_upcoming_fragment.setLayoutManager(linearLayoutManager);
 //        UpComingAdapter adapter = new UpComingAdapter(getActivity());
 //        rv_upcoming_fragment.setAdapter(adapter);
+//        rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        adapter = new ComingAdapter(getActivity());
+        adapter.setUpCominglist(listnexpage);
+
+        rv_upcoming_fragment.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
-        viewModel.getUpComing();
+        viewModel.getUpComing(currentPage);
         viewModel.getResultUpComing().observe(getActivity(), showUpComing);
+        rv_upcoming_fragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) rv_upcoming_fragment.getLayoutManager();
+                if(check == false){
+                    if( linearLayoutManager!=null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == listnexpage.size()-1){
+                        if( currentPage <= maxPage){
+                            check = true;
+                            currentPage++;
+                            listnexpage.add(null);
+                            adapter.notifyDataSetChanged();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listnexpage.remove(null);
+                                    viewModel.getUpComing(currentPage);
+                                    viewModel.getResultUpComing().observe(getActivity(), showUpComing);
+//                                        listnexpage.addAll(newUpcoming.getResults());
+//
+//                                    });
+                                    check = false;
+                                }
+                            }, 2000);
+                        }
+                    }
+                }
+            }
+
+        });
         return view;
-
-
     }
 
 
     private Observer<UpComing> showUpComing = new Observer<UpComing>() {
         @Override
         public void onChanged(UpComing upComing) {
-
-            adapter = new UpComingAdapter(getActivity());
-            adapter.setUpCominglist(listnexpage);
-            rv_upcoming_fragment.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter.setUpCominglist(upComing.getResults());
+            maxPage = upComing.getTotal_pages();
+//            adapter.setUpCominglist(upComing.getResults());
                 listnexpage.addAll(upComing.getResults());
-                rv_upcoming_fragment.setAdapter(adapter);
+//                listnexpage.add(null);
+            adapter.notifyDataSetChanged();
+
+
                 ItemClickSupport.addTo(rv_upcoming_fragment).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("movieId", "" + upComing.getResults().get(position).getId());
+                        bundle.putString("movieId", "" + listnexpage.get(position).getId());
                         Navigation.findNavController(v).navigate(R.id.action_upComingFragment_to_MovieDetailsFragment, bundle);
                     }
                 });
@@ -125,6 +164,7 @@ public class upComingFragment extends Fragment {
         }
 
     };
+
 
 
 

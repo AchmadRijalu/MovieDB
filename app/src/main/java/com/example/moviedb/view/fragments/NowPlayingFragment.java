@@ -3,6 +3,7 @@ package com.example.moviedb.view.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,18 +11,25 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.moviedb.R;
+import com.example.moviedb.adapter.ComingAdapter;
 import com.example.moviedb.adapter.NowPlayingAdapter;
+import com.example.moviedb.adapter.PlayingAdapter;
 import com.example.moviedb.adapter.PopularAdapter;
 import com.example.moviedb.helper.ItemClickSupport;
 import com.example.moviedb.model.NowPlaying;
 import com.example.moviedb.model.Popular;
+import com.example.moviedb.model.UpComing;
 import com.example.moviedb.view.activities.NowPlayingActivity;
 import com.example.moviedb.viewmodel.MovieViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +81,11 @@ public class NowPlayingFragment extends Fragment {
     private RecyclerView rv_now_playing, rv_now_playing_popular;
     private MovieViewModel view_Model ,view_model2;
     private ProgressDialog dialog;
+    private int currentPage = 1;
+    private int maxPage = 1;
+    private List<NowPlaying.Results> listnexpage = new ArrayList<>();
+    private PlayingAdapter adapter;
+    public boolean check = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,26 +94,65 @@ public class NowPlayingFragment extends Fragment {
 
         rv_now_playing = view.findViewById(R.id.rv_now_playing_fragment);
         rv_now_playing_popular = view.findViewById(R.id.rv_now_playing_popular);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_now_playing.setLayoutManager(linearLayoutManager);
+        adapter = new PlayingAdapter(getActivity());
+        adapter.setNowcominglist(listnexpage);
+
+        rv_now_playing.setAdapter(adapter);
+
         view_Model = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
-
-        view_Model.getNowPlaying();
-
+        view_Model.getNowPlaying(currentPage);
         view_Model.getResultNowPlaying().observe(getActivity(), showNowPlaying);
 
 
         view_model2 = new ViewModelProvider(getActivity()).get(MovieViewModel.class);
         view_model2.getPopular();
         view_model2.getResultPopular().observe(getActivity(), showPopular);
+        rv_now_playing.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) rv_now_playing.getLayoutManager();
+                if(check == false){
+                    if( linearLayoutManager!=null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == listnexpage.size()-1){
+                        if( currentPage <= maxPage){
+                            check = true;
+                            currentPage++;
+                            listnexpage.add(null);
+                            adapter.notifyDataSetChanged();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listnexpage.remove(null);
+                                    view_Model.getNowPlaying(currentPage);
+                                    view_Model.getResultNowPlaying().observe(getActivity(), showNowPlaying);
+//                                        listnexpage.addAll(newUpcoming.getResults());
+//
+//                                    });
+                                    check = false;
+                                }
+                            }, 2000);
+                        }
+                    }
+                }
+            }
+
+        });
         return view;
     }
     private Observer<NowPlaying> showNowPlaying = new Observer<NowPlaying>() {
         @Override
         public void onChanged(NowPlaying nowPlaying) {
-            rv_now_playing.setLayoutManager(new LinearLayoutManager(getActivity()));
-            NowPlayingAdapter adapter = new NowPlayingAdapter(getActivity());
-            adapter.setListNowPlaying(nowPlaying.getResults());
-            rv_now_playing.setAdapter(adapter);
+//            rv_now_playing.setLayoutManager(new LinearLayoutManager(getActivity()));
+//            NowPlayingAdapter adapter = new NowPlayingAdapter(getActivity());
+//            adapter.setListNowPlaying(nowPlaying.getResults());
+//            rv_now_playing.setAdapter(adapter);
+            maxPage = nowPlaying.getTotal_pages();
+            listnexpage.addAll(nowPlaying.getResults());
+            adapter.notifyDataSetChanged();
 
 //            ItemClickSupport.addTo(rv_now_playing).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
 //                @Override

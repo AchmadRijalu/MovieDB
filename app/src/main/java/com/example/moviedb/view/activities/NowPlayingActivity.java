@@ -28,7 +28,7 @@ public class NowPlayingActivity extends AppCompatActivity {
         rv_now_playing = findViewById(R.id.rv_now_playing);
         view_Model = new ViewModelProvider(NowPlayingActivity.this).get(MovieViewModel.class);
 
-        view_Model.getNowPlaying();
+        view_Model.getNowPlaying(1);
 
         view_Model.getResultNowPlaying().observe(NowPlayingActivity.this, showNowPlaying);
 
